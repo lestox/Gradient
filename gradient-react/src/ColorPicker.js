@@ -1,15 +1,14 @@
-import React, {Component} from 'react'
+import React, {Component, useEffect, useState} from 'react'
 import { SketchPicker } from 'react-color'
 import reactCSS from 'reactcss'
 
 export class ColorPicker extends Component {
 
-    setColors = this.props.setColors;
-
     constructor(props) {
         super(props);
 
         this.state = {
+            title : '',
             showPicker: false,
             color: {
                 r: '225',
@@ -35,6 +34,7 @@ export class ColorPicker extends Component {
         this.setState({
             color: color.rgb
         })
+        console.log({color});
     };
 
     render() {
@@ -70,18 +70,23 @@ export class ColorPicker extends Component {
         });
 
         return (
-            <div>
-                <div style={ styles.swatch } onClick={ this.onClick }>
-                    <div style={ styles.color } />
+            <>
+                <div className="card">
+                    <div className="card-body">
+                        <h5 className="card-title">{this.props.title}</h5>
+                        <div className="card-text" style={ styles.swatch } onClick={ this.onClick }>
+                            <div className="card-text" style={ styles.color } />
+                        </div>
+                        { this.state.showPicker ? <div style={ styles.popover }>
+                            <div className="card-text" style={ styles.cover } onClick={ this.onClose }/>
+                            <SketchPicker color={ this.state.color } onChange={ this.onChange } />
+                        </div> : null }
+                    </div>
                 </div>
-                { this.state.showPicker ? <div style={ styles.popover }>
-                    <div style={ styles.cover } onClick={ this.onClose }/>
-                    <SketchPicker color={ this.state.color } onChange={ this.onChange } />
-                </div> : null }
-
-            </div>
+            </>
         )
     }
 }
+
 
 export default ColorPicker

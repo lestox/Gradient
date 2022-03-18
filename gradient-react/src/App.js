@@ -1,46 +1,42 @@
-import React, {useState} from 'react';
+import React, {useState, setState} from 'react';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import ColorPicker from './ColorPicker';
+import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
+import Gradient from "./Gradient";
 
 function App() {
 
-    const [colors, setColors] = useState( [
+    function handleColorChange(color) {
+        this.setState(prev => [...prev, color])
+    }
+
+    const [cards] = useState( [
         {
-            showPicker: false,
-            color: {
-                r: '225',
-                g: '155',
-                b: '99',
-                a: '2',
-            },
+            title: 'Pick a color',
+            id : generateUniqueID(),
+            color: {}
         },
         {
-            showPicker: false,
-            color: {
-                r: '225',
-                g: '155',
-                b: '99',
-                a: '2',
-            },
+            title: 'Pick a second color',
+            id : generateUniqueID(),
+            color: {}
         },
         {
-            showPicker: false,
-            color: {
-                r: '225',
-                g: '155',
-                b: '99',
-                a: '2',
-            },
+            title : 'Pick a third color',
+            id : generateUniqueID(),
+            color: {}
         }
     ]);
 
     return (
         <div className="App container">
-            {colors.map((color) => (
-                (<ColorPicker color={color.showPicker} text={color.text} key={color.id}/>)
-            ))}
-
+            <div className="card-group">
+                {cards.map((card) => (
+                    (<ColorPicker color={card.color} title={card.title} key={card.id}/>)
+                ))}
+            </div>
+            <Gradient color={cards.color}/>
         </div>
     );
 }
