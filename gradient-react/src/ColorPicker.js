@@ -1,18 +1,23 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { SketchPicker } from 'react-color'
 import reactCSS from 'reactcss'
 
-class ColorPicker extends React.Component {
+export class ColorPicker extends Component {
 
-    state = {
-        showPicker: false,
-        color: {
-            r: '225',
-            g: '155',
-            b: '99',
-            a: '2',
-        },
-    };
+    setColors = this.props.setColors;
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showPicker: false,
+            color: {
+                r: '225',
+                g: '155',
+                b: '99',
+                a: '2',
+            },
+    }};
 
     onClick = () => {
         this.setState({
